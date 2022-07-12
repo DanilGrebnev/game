@@ -1,0 +1,289 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap');
+
+:root {
+    --border-btn: 2px solid black;
+    --padding-window: 50px
+}
+
+body {
+    user-select: none;
+    height: 100vh;
+    font-family: Montserrat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#window {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 500px;
+    width: 100%;
+    height: 500px;
+    border: 2px solid black;
+    border-radius: 25px;
+    position: relative;
+    padding: 30px;
+    box-sizing: border-box;
+}
+
+menu {
+    display: none;
+}
+
+menu.active {
+    display: block;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+menu li {
+    cursor: pointer;
+    text-align: center;
+    padding: 10px;
+    border: var(--border-btn);
+    display: block;
+    margin-bottom: 10px;
+    border-radius: 25px;
+    transition: 300ms;
+    width: 200px;
+}
+menu li:nth-child(1) {
+    margin-bottom: 10px;
+}
+
+#menu li.animate, #surrender.animate {
+    transform: scale(.9);
+}
+
+/* Стили окна настроек */
+#settings {
+    position: relative;
+    display: none;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+#settings.active {
+    display: flex;
+}
+
+/* Сложность */
+#difficult p,
+#difficult li {
+    padding: 10px;
+    border: 2px solid black;
+    transition: transform 1s;
+}
+
+#difficult p {
+    border-radius: 25px;
+    transition: 300ms;
+}
+
+#difficult p.active {
+    border-radius: 25px 25px 0 0;
+}
+
+#difficult p,
+ul li {
+    cursor: pointer;
+}
+
+#difficult li {
+    border-bottom: none;
+}
+
+#difficult {
+    text-align: center;
+    padding: 10px;
+}
+
+#difficult ul {
+    /* transition: 1s; */
+    overflow-y: hidden;
+}
+
+#difficult li:nth-child(1) {
+    border-top: none;
+    transform: translateY(-100%);
+}
+
+#difficult li:nth-child(2) {
+    transform: translateY(-200%);
+}
+
+#difficult li:nth-child(3) {
+    transform: translateY(-300%);
+    border-bottom: 2px solid black;
+    border-radius: 0 0 25px 25px;
+}
+
+#difficult ul.active li {
+    transform: translateY(0%);
+}
+
+#difficult li.active {
+    background: blue;
+    color: white;
+}
+
+#checkbox {
+    position: absolute;
+    border: 1px solid black;
+    width: 40px;
+    height: 20px;
+    border-radius: 20px;
+    top: 20px;
+    right: 20px;
+}
+
+#checkbox div {
+    cursor: pointer;
+    transition-duration: .5s;
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    border: 1px solid black;
+    border-radius: 100%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-100%, -50%);
+}
+
+#checkbox div.active {
+    transform: translate(0%, -50%);
+}
+
+/* Игровое пространство */
+#game {
+    display: none;
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.arrow {
+    background-image: url(./img/arrow.png);
+    background-size: 100%;
+    width: 50px;
+    height: 50px;
+    transform: rotate(-90deg);
+    position: absolute;
+    right: 5%;
+    top: 0px;
+    cursor: pointer;
+
+}
+
+#game.active {
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#alert {
+    position: absolute;
+    text-align: center;
+    display: inline-block;
+}
+
+/* Форма */
+form {
+    margin-top: 25%;
+}
+
+form p {
+    text-align: center;
+}
+
+form div {
+    max-width: 270px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+form input,
+form input:focus {
+    font-size: 20px;
+    padding: 0px;
+    outline: none;
+    border: none;
+    border-bottom: 1px solid black;
+    border-top: 1px solid black;
+    padding: 5px;
+}
+
+form input {
+    margin-top: 20px;
+}
+
+form button,
+#surrender {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 10px;
+    border: 1px solid black;
+    background: white;
+    border-radius: 20px;
+}
+
+#attemp-val {
+    margin: 20px auto;
+}
+
+#surrender {
+    position: absolute;
+    padding: 5px 10px;
+    bottom: 0px;
+    left: 50%;
+    transform: translateX(-50%);
+    cursor: pointer;
+}
+
+#win {
+    display: none;
+    border: 2px solid black;
+    width: 90%;
+    height: 90%;
+    border-radius: 25px;
+    position: absolute;
+}
+
+#win.active {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#win p {
+    font-size: 30px;
+}
+
+#win div {
+    top: 10px;
+    right: 10px;
+    position: absolute;
+    background-image: url(https://cdn-icons.flaticon.com/png/512/1550/premium/1550277.png?token=exp=1657614414~hmac=f3ebdf52fadeaf7db6d4cee4d8c2b6d5);
+    width: 30px;
+    height: 30px;
+    background-size: cover;
+}
+#close {
+    cursor: pointer;
+}
+.difficult-info {
+    text-align: center;
+    margin-top: 30px;
+}

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="author" content="Данил Гребнев">
+    <meta name="description" content='Игра "угадай число"'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Game</title>
+    <link rel="shortcut icon" href="img/icons.ico">
+    <link rel="stylesheet" href="reset.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <section id="window">
+        <menu id="menu" class="active">
+            <div id="checkbox">
+                <div></div>
+            </div>
+            <li id="start">Начать игру</li>
+            <li id="setting">Настройки</li>
+            <div class="difficult-info">Cложность: <span>Легко (0 - 10)</span></div>
+        </menu>
+        <section id="game" class="">
+            <p id="alert">
+                <!-- Число, которое я загадал, меньше твоего -->
+            </p>
+            <form id="form" action="">
+                <p>Проверьте число:</p>
+                <input maxlength="4" type="text">
+                <p id="attemp-val">Нет введённых значений</p>
+                <div>
+                    <button id="inc" type="button">+</button>
+                    <button id="submit" type="submit">Проверить</button>
+                    <button id="dec" type="button">-</button>
+                </div>
+                <p class="difficult-info">Cложность: <span>Легко (0 - 10)</span></p>
+                <div id="surrender">Назад</div>
+            </form>
+        </section>
+        <section id="settings" class="">
+            <div title="назад" class="arrow"></div>
+            <section id="difficult">
+                <p class="">Сложность</p>
+                <ul class="">
+                    <li data-difficult="10">Легко</li>
+                    <li data-difficult="100">Везучий</li>
+                    <li data-difficult="1000">Ванга</li>
+                </ul>
+            </section>
+        </section>
+        <section id="win" class="">
+            <div id="close"></div>
+            <p>Вы угадали!</p>
+            <p>Попыток использовано: </p>
+            <p id="win-info"></p>
+        </section>
+    </section>
+    <script type="module" src="scripts/var.js"></script>
+    <script type="module" src="scripts/index.js"></script>
+</body>
+
+</html>
