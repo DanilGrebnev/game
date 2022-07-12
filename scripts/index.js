@@ -67,7 +67,6 @@ function main() {
 
     //ПРОВЕРКА ЧИСЛА
     d.form.addEventListener('submit', e => {
-        console.log('rand:', rand, 'value:', value)
         e.preventDefault()
         if (value === null || value === ' ' || value === undefined) return
 
@@ -88,11 +87,11 @@ function main() {
             return
         }
         count++;
-        if (count > 0) d.surrender.innerText = 'Сдаться'
+        if (count > 0) {d.surrender.innerText = 'Сдаться'}
         d.attemp.innerText = `Вы ввели: ${a}`;
     })
 
-    d.closeWin.addEventListener('click', backToMenu)
+    d.win.addEventListener('click', backToMenu)
 
     let setId;
     //Открытие и закрытие списка сложности
