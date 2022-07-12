@@ -1,5 +1,7 @@
 import { random, $, $all } from './fn.js'
 const data = {
+    //Получение кнопок сложности
+    a: $all('ul li'),
     difInf: $all('.difficult-info span'),
     //Сдаться
     surrender: $('#surrender'),
@@ -9,8 +11,10 @@ const data = {
     win: $('#win'),
     //Вывод количества попыток
     winInfo: $('#win-info'),
-    //Поле вывода ведённых значений
+    //Поле вывода текста
     attemp: $('#attemp-val'),
+    //Вывод введённыъ значений
+    attempNmb:$('#attemp-nmb'),
     //Окно алерт
     al: $('#alert'),
     //Начать
@@ -29,5 +33,4 @@ const data = {
     ul: $('#difficult ul'),
     input: $('form input'),
 }
-console.log(data.difInf)
 export { data }

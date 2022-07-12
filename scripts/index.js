@@ -1,7 +1,7 @@
 //Функции
 import { $, $all, random, toggleWindow, backToMenu, delay, add, remove, toggle } from './fn.js';
 import { data as d } from './var.js'
-
+//d (data) - хранилище пременных
 window.addEventListener('load', main)
 
 function main() {
@@ -23,6 +23,7 @@ function main() {
         rand = random();
         a = [];
         d.attemp.innerText = 'Нет введённых значений';
+        d.attempNmb.innerText = a;
         d.al.innerText = '';
         d.surrender.innerText = 'Назад'
     }
@@ -78,7 +79,7 @@ function main() {
             d.al.innerText = 'Число, которое я загадал, меньше твоего'
         } else if (rand === value) {
             count++
-            d.attemp.innerText = `Вы ввели: ${a}`;
+            d.attempNmb.innerText = a
             remove(d.game, 'active')
             add(d.win, 'active')
             d.winInfo.innerText = count;
@@ -86,9 +87,10 @@ function main() {
             reset()
             return
         }
+        d.attemp.innerText = `Вы ввели: `;
         count++;
-        if (count > 0) {d.surrender.innerText = 'Сдаться'}
-        d.attemp.innerText = `Вы ввели: ${a}`;
+        if (count > 0) { d.surrender.innerText = 'Сдаться' }
+        d.attempNmb.innerText = a;
     })
 
     d.win.addEventListener('click', backToMenu)
@@ -105,12 +107,11 @@ function main() {
     });
     //Задержки для анимации меню настроек
     d.ul.addEventListener('click', e => {
-        //Получение кнопок сложности
-        const a = $all('ul li');
+        d.a;
         const v = e.target;
         if (v.dataset.difficult) {
             //Удаляет класс со всех кнопок
-            a.forEach(el => remove(el, 'active'))
+            d.a.forEach(el => remove(el, 'active'))
             //Закрывает список через время
             delay(d.ul, "active", 1500)
             delay(d.difficult_p, "active", 2000)

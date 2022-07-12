@@ -244,9 +244,21 @@ form button,
 #attemp-val {
     margin: 20px auto;
     width: 300px;
-    border: 2px solid black;
 }
-
+#attemp-nmb{
+    width: 300px;
+    overflow-x: scroll;
+    margin-bottom: 20px;
+    scrollbar-width: thin;
+}
+#attemp-nmb::-webkit-scrollbar{
+    height: 8px;
+}
+#attemp-nmb::-webkit-scrollbar-thumb {
+    background-color: #843465;
+    border-radius: 9em;
+    max-width: 20px;
+}
 #surrender {
     position: absolute;
     padding: 5px 10px;
