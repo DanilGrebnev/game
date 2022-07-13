@@ -304,3 +304,13 @@ form button,
     text-align: center;
     margin-top: 30px;
 }
+#multiplayer {
+    display: none;
+    width: 100%;
+    height: 100%;
+}
+#multiplayer .active {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

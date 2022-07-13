@@ -1,12 +1,15 @@
 //Функции
-import { $, $all, random, toggleWindow, backToMenu, delay, add, remove, toggle } from './fn.js';
+import { $, $id, $all, random, toggleWindow, backToMenu, delay, add, remove, toggle } from './fn.js';
 import { data as d } from './var.js'
 //d (data) - хранилище пременных
+
 window.addEventListener('load', main)
 
 function main() {
+    let setId;
     //Число, получаемое с формы
     let value;
+    let multiVal;
     //Количество попыток
     let count = 0;
     //генерация случайного числа
@@ -14,6 +17,7 @@ function main() {
     let rand = random(number)
     //Массив с введёнными значениями
     let a = []
+    let togglePlay = false
 
     //Сброс данных 
     const reset = () => {
@@ -29,20 +33,30 @@ function main() {
     }
 
     //Навигацию по меню
-    d.start.addEventListener('click', e => {
-        add(e.target, 'animate')
-        delay(e.target, 'animate', 200)
-        setTimeout(toggleWindow, 1000, game)
+    document.addEventListener('click', e => {
+        const el = e.target
+        //Если целью является один из элементов меню
+        $all('menu li').forEach(elem => {
+            if (el === elem) {
+                add(e.target, 'animate')
+                delay(e.target, 'animate', 200)
+            }
+        })
+
+        if (el === $id("start")) {
+            setTimeout(toggleWindow, 1000, game)
+            togglePlay = false
+        }
+
+        if (el === $id("setting")) setTimeout(toggleWindow, 1000, settings)
+
+        if (el === $id('multi')) {
+            setTimeout(toggleWindow, 1000, game)
+            togglePlay = true
+        }
     })
 
-    d.setting.addEventListener('click', e => {
-        add(e.target, 'animate')
-        delay(e.target, 'animate', 200)
-        setTimeout(toggleWindow, 1000, settings)
-    })
 
-    //Выход в меню по стрелке
-    $all('.arrow').forEach(el => el.addEventListener('click', backToMenu))
 
     //Выбор сложности
     d.ul.addEventListener('click', e => {
@@ -52,50 +66,78 @@ function main() {
             rand = random(number)
         }
     })
+
+    function singlePlayer(e) {
+        value = e.target.value
+    }
+    function multiplayer(e) {
+        multiVal = e.target.value
+
+    }
+
     d.input.addEventListener('input', (e) => {
-        value = +e.target.value
+        if (!togglePlay) {
+            singlePlayer(e)
+
+        } else if (togglePlay) {
+            multiplayer(e)
+        }
     })
 
     //Прибавить или отнять единицу от числа;
     d.inc.addEventListener('click', () => {
-        d.input.value++
-        value = +d.input.value;
+        let val = d.input.value;
+        val++
+        d.input.value = +val
+        if (!togglePlay) {
+            value = val
+        } else {
+            multiVal = val;
+        }
     })
     d.dec.addEventListener('click', () => {
-        d.input.value--
-        value = +d.input.value;
+        let val = +d.input.value
+        val--
+        d.input.value = +val
+        if (!togglePlay) {
+            value = val
+        } else {
+            multiVal = val;
+        }
+
     })
 
     //ПРОВЕРКА ЧИСЛА
     d.form.addEventListener('submit', e => {
         e.preventDefault()
-        if (value === null || value === ' ' || value === undefined) return
-
-        a = [...a, value]
-
-        if (rand > value) {
-            d.al.innerText = 'Число, которое я загадал, больше твоего'
-        } else if (rand < value) {
-            d.al.innerText = 'Число, которое я загадал, меньше твоего'
-        } else if (rand === value) {
-            count++
-            d.attempNmb.innerText = a
-            remove(d.game, 'active')
-            add(d.win, 'active')
-            d.winInfo.innerText = count;
-            count = 0
-            reset()
-            return
+        if (!togglePlay) {
+            if (value === null || value === ' ' || value === undefined) return
+            a = [...a, value]
+            if (rand > value) {
+                d.al.innerText = 'Число, которое я загадал, больше твоего'
+            } else if (rand < value) {
+                d.al.innerText = 'Число, которое я загадал, меньше твоего'
+            } else if (rand === value) {
+                count++
+                d.attempNmb.innerText = a
+                remove(d.game, 'active')
+                add(d.win, 'active')
+                d.winInfo.count.innerText = count;
+                d.winInfo.value.innerText = value;
+                count = 0
+                reset()
+                return
+            }
+            d.attemp.innerText = `Вы ввели: `;
+            count++;
+            if (count > 0) { d.surrender.innerText = 'Сдаться' }
+            d.attempNmb.innerText = a;
         }
-        d.attemp.innerText = `Вы ввели: `;
-        count++;
-        if (count > 0) { d.surrender.innerText = 'Сдаться' }
-        d.attempNmb.innerText = a;
+
     })
 
     d.win.addEventListener('click', backToMenu)
 
-    let setId;
     //Открытие и закрытие списка сложности
     d.difficult_p.addEventListener('click', () => {
         if (d.difficult_p.classList.contains('active')) {
@@ -125,18 +167,13 @@ function main() {
         }
     })
 
-    //Переключение чекбокса смены темы 
-    $("#checkbox div").addEventListener('click', e => {
-        toggle(e.target, 'active')
-    })
-
     //Сдаться
     d.surrender.addEventListener('click', () => {
         let accept
         if (count === 0) {
             backToMenu()
             return
-        }
+        } else
         accept = confirm('вы уверены?')
         if (accept) {
             alert(`
@@ -146,6 +183,18 @@ function main() {
             reset()
             backToMenu()
         }
+    })
+
+
+
+
+
+
+    //Выход в меню по стрелке
+    $all('.arrow').forEach(el => el.addEventListener('click', backToMenu))
+    //Переключение чекбокса смены темы 
+    $("#checkbox div").addEventListener('click', e => {
+        toggle(e.target, 'active')
     })
 }
 

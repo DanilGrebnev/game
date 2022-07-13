@@ -9,12 +9,15 @@ const data = {
     menu: $('#menu'),
     //Окно победы
     win: $('#win'),
-    //Вывод количества попыток
-    winInfo: $('#win-info'),
+    //Вывод информации победителя
+    winInfo:{
+        count:$('#win-info'),
+        value:$('#win-value')
+    },
     //Поле вывода текста
     attemp: $('#attemp-val'),
     //Вывод введённыъ значений
-    attempNmb:$('#attemp-nmb'),
+    attempNmb: $('#attemp-nmb'),
     //Окно алерт
     al: $('#alert'),
     //Начать
@@ -32,5 +35,9 @@ const data = {
     //Обёртка списка кнопок сложности
     ul: $('#difficult ul'),
     input: $('form input'),
+    //Кнопка начала мультиплеера
+    multi: $('#multi'),
 }
+
+
 export { data }

@@ -2,6 +2,7 @@ import { data as d } from './var.js'
 //Найти элемент
 const $ = (selector) => document.querySelector(selector);
 const $all = (selector) => document.querySelectorAll(selector);
+const $id = (selector) => document.getElementById(selector);
 //Получить случайное число
 const random = (number = 10) => Math.floor(Math.random() * number);
 //Навигация по онкам в меню
@@ -30,4 +31,5 @@ const toggle = (el, className) => {
     el.classList.toggle(className)
 }
 
-export { $, $all, random, toggleWindow, backToMenu, delay, add, remove, toggle }
+
+export { $, $all, random, toggleWindow, backToMenu, delay, add, remove, toggle, $id }
