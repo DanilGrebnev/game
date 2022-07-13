@@ -7,17 +7,21 @@ window.addEventListener('load', main)
 
 function main() {
     //Число, получаемое с формы
-    let value;
-    let togglePlay = true
+    let togglePlay = false
     let multiVal = {
         counter: 1,
-        step1: 0,
-        step2: 0,
-        vl1: [],
-        vl2: [],
-        data1: Number(''),
-        data2: Number(''),
+        player1: {
+            steps: Number(''),
+            value: Number(''),
+            a: [],
+        },
+        player2: {
+            steps: Number(''),
+            value: Number(''),
+            a: [],
+        },
     };
+    const {player1, player2, counter} = multiVal;
     //Количество попыток
     let count = 0;
     //Приходит из уровня сложности
@@ -39,20 +43,19 @@ function main() {
         d.al.innerText = '';
         d.surrender.innerText = 'Назад';
     }
-
     //ПРОВЕРКА ЧИСЛА
     d.form.addEventListener('submit', e => {
         e.preventDefault()
         if (!togglePlay) {
-            examination(d.input.value)
+            examination(+d.input.value)
         } else if (togglePlay) {
             conditionMulti()
-            switch (multiVal.counter) {
+            switch (counter) {
                 case 1:
-                    examination(multiVal.data1)
+                    examination(player1.value)
                     break
                 case 2:
-                    examination(multiVal.data2)
+                    examination(player2.value)
                     break
             }
         }
@@ -78,20 +81,19 @@ function main() {
     }
 
     function conditionMulti() {
-        let { step1, step2, vl1, vl2, data1, data2, counter } = multiVal;
         let input = +d.input.value
-        switch (multiVal.counter) {
+        switch (counter) {
             case 1: {
-                step1++
-                data1 = input
                 counter++
-                vl1 = [...multiVal.vl1, multiVal.data1]
+                player1.steps++
+                player1.value = input
+                player1.a = [...player1.a, input]
                 break;
             }
             case 2: {
-                step2++
-                data2 = input
-                vl2 = [...multiVal.vl2, +d.input.value]
+                player2.steps++
+                player2.value = input
+                player2.a = [...player1.a, input]
                 counter = 1
                 break
             }
@@ -116,16 +118,10 @@ function main() {
 
     //Инкремент значения в поле
     d.inc.addEventListener('click', () => {
-        let val = d.input.value;
-        val++
-        d.input.value = +val
-        if (!togglePlay) value = val
+        d.input.value++
     })
     d.dec.addEventListener('click', () => {
-        let val = +d.input.value
-        val--
-        d.input.value = +val
-        if (!togglePlay) value = val
+        d.input.value--
     })
     //==============================================================================================
     //Выбор сложности
