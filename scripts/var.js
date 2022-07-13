@@ -1,43 +1,43 @@
-import { random, $, $all } from './fn.js'
+import { $, $all, $id, } from './fn.js'
 const data = {
     //Получение кнопок сложности
     a: $all('ul li'),
     difInf: $all('.difficult-info span'),
     //Сдаться
-    surrender: $('#surrender'),
+    surrender: $id('surrender'),
     //Окно меню
-    menu: $('#menu'),
+    menu: $id('menu'),
     //Окно победы
-    win: $('#win'),
+    win: $id('win'),
     //Вывод информации победителя
     winInfo:{
-        count:$('#win-info'),
-        value:$('#win-value')
+        count:$id('win-info'),
+        value:$id('win-value')
     },
+    player: $id('player'),
     //Поле вывода текста
-    attemp: $('#attemp-val'),
+    attemp: $id('attemp-val'),
     //Вывод введённыъ значений
-    attempNmb: $('#attemp-nmb'),
+    attempNmb: $id('attemp-nmb'),
     //Окно алерт
-    al: $('#alert'),
+    al: $id('alert'),
     //Начать
-    start: $('#start'),
+    start: $id('start'),
     //Настройки
-    setting: $('#setting'),
-    settings: $('#settings'),
+    setting: $id('setting'),
+    settings: $id('settings'),
     //игровое поле
-    game: $('#game'),
+    game: $id('game'),
     form: $('form'),
     //Инкремент декремент значения
-    inc: $('#inc'),
-    dec: $('#dec'),
+    inc: $id('inc'),
+    dec: $id('dec'),
     difficult_p: $('#difficult p'),
     //Обёртка списка кнопок сложности
     ul: $('#difficult ul'),
     input: $('form input'),
     //Кнопка начала мультиплеера
-    multi: $('#multi'),
+    multi: $id('multi'),
 }
-
 
 export { data }

@@ -14,7 +14,7 @@
 
 <body>
     <section id="window">
-        <menu id="menu" class="active">
+        <menu id="menu" class="">
             <div id="checkbox">
                 <div></div>
             </div>
@@ -23,10 +23,11 @@
             <li id="setting">Настройки</li>
             <div class="difficult-info">Cложность: <span>Легко (0 - 10)</span></div>
         </menu>
-        <section id="game" class="">
+        <section id="game" class="active">
             <p id="alert">
                 <!-- Число, которое я загадал, меньше твоего -->
             </p>
+            <p id="player"></p>
             <form id="form" action="">
                 <p>Проверьте число:</p>
                 <input maxlength="4" type="text">
@@ -37,7 +38,7 @@
                     <button id="submit" type="submit">Проверить</button>
                     <button id="dec" type="button">-</button>
                 </div>
-                <p class="difficult-info">Cложность: <span>Легко (0 - 10)</span></p>
+                <p class="difficult-info">Cложность: <span>Легко <br>(0 - 10)</span></p>
                 <div id="surrender">Назад</div>
             </form>
         </section>
@@ -57,7 +58,7 @@
         </section>
 
         <section id="win" class="">
-            <p>Вы угадали!</p>
+            <p id="win-player">Вы угадали!</p>
             <p>Это было число: <span id="win-value"></span></p>
             <p>Попыток использовано: </p>
             <p id="win-info"></p>

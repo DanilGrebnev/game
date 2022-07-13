@@ -30,6 +30,12 @@ const remove = (el, className) => {
 const toggle = (el, className) => {
     el.classList.toggle(className)
 }
+//Показать окно победы
+const showWin = (par1, par2, rand, count) => {
+    remove(par1, 'active')
+    add(par2, 'active')
+    d.winInfo.count.innerText = count;
+    d.winInfo.value.innerText = rand;
+}
 
-
-export { $, $all, random, toggleWindow, backToMenu, delay, add, remove, toggle, $id }
+export { showWin, $, $all, random, toggleWindow, backToMenu, delay, add, remove, toggle, $id }
