@@ -1,4 +1,5 @@
 import { data as d } from './var.js'
+import { multiVal } from './index.js'
 //Найти элемент
 const $ = (selector) => document.querySelector(selector);
 const $all = (selector) => document.querySelectorAll(selector);
@@ -12,8 +13,8 @@ const toggleWindow = (el) => {
 }
 //Закрытие всех вкладок, переход в меню
 const backToMenu = () => {
-    [d.game, d.settings, d.al, d.win].forEach(el => el.classList.remove('active'))
-    menu.classList.add('active')
+    [d.game, d.settings, d.al, d.win].forEach(el => remove(el, 'active'))
+    add(menu, 'active')
 }
 const delay = (el, className, delay) => {
     setTimeout(() => {
@@ -30,8 +31,15 @@ const remove = (el, className) => {
 const toggle = (el, className) => {
     el.classList.toggle(className)
 }
+
 //Показать окно победы
-const showWin = (par1, par2, rand, count) => {
+let { player1, player2 } = multiVal;
+const showWin = (par1, par2, rand, count, value) => {
+    if (value === player1.value) {
+        d.winInfo.player.innerHTML = 'Победил <strong>1</strong> игрок!'
+    } else if (value === player2.value) {
+        d.winInfo.player.innerHTML = 'Победил <strong>2</strong> игрок!'
+    }
     remove(par1, 'active')
     add(par2, 'active')
     d.winInfo.count.innerText = count;

@@ -14,7 +14,7 @@
 
 <body>
     <section id="window">
-        <menu id="menu" class="">
+        <menu id="menu" class="active">
             <div id="checkbox">
                 <div></div>
             </div>
@@ -23,16 +23,17 @@
             <li id="setting">Настройки</li>
             <div class="difficult-info">Cложность: <span>Легко (0 - 10)</span></div>
         </menu>
-        <section id="game" class="active">
+        <section id="game" class="">
             <p id="alert">
                 <!-- Число, которое я загадал, меньше твоего -->
             </p>
             <p id="player"></p>
-            <form id="form" action="">
+            <form id="form">
                 <p>Проверьте число:</p>
                 <input maxlength="4" type="text">
                 <p id="attemp-val">Нет введённых значений</p>
                 <p id="attemp-nmb"></p>
+                <p id="attemp-nmb2" class=""></p>
                 <div>
                     <button id="inc" type="button">+</button>
                     <button id="submit" type="submit">Проверить</button>
@@ -66,6 +67,8 @@
     </section>
     <script type="module" src="scripts/var.js"></script>
     <script type="module" src="scripts/index.js"></script>
+    <script type="module" src="scripts/fn.js"></script>
+
 </body>
 
 </html>

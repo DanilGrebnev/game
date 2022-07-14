@@ -10,15 +10,17 @@ const data = {
     //Окно победы
     win: $id('win'),
     //Вывод информации победителя
-    winInfo:{
-        count:$id('win-info'),
-        value:$id('win-value')
+    winInfo: {
+        player: $id('win-player'),
+        count: $id('win-info'),
+        value: $id('win-value')
     },
     player: $id('player'),
     //Поле вывода текста
     attemp: $id('attemp-val'),
     //Вывод введённыъ значений
     attempNmb: $id('attemp-nmb'),
+    attempNmb2: $id('attemp-nmb2'),
     //Окно алерт
     al: $id('alert'),
     //Начать

@@ -4,24 +4,23 @@ import { data as d } from './var.js'
 //d (data) - хранилище пременных
 
 window.addEventListener('load', main)
-
+let multiVal = {
+    turn: true,
+    player1: {
+        steps: 0,
+        value: Number(''),
+        a: [],
+    },
+    player2: {
+        steps: 0,
+        value: Number(''),
+        a: [],
+    },
+};
 function main() {
-    //Число, получаемое с формы
-    let togglePlay = false
-    let multiVal = {
-        counter: 1,
-        player1: {
-            steps: Number(''),
-            value: Number(''),
-            a: [],
-        },
-        player2: {
-            steps: Number(''),
-            value: Number(''),
-            a: [],
-        },
-    };
-    const {player1, player2, counter} = multiVal;
+    let onePlayer = true
+
+    let { player1, player2, turn, } = multiVal;
     //Количество попыток
     let count = 0;
     //Приходит из уровня сложности
@@ -30,77 +29,107 @@ function main() {
     let rand = random(number)
     //Массив с введёнными значениями
     let a = []
-
+    let { attempNmb, attempNmb2, attemp, al, surrender, form, game, win } = d;
     //Сброс данных 
     const reset = () => {
         d.input.value = ''
-        value = '';
         count = 0;
         rand = random();
         a = [];
-        d.attemp.innerText = 'Нет введённых значений';
-        d.attempNmb.innerText = a;
-        d.al.innerText = '';
-        d.surrender.innerText = 'Назад';
+        attempNmb.innerText = '';
+        attemp.innerText = 'Нет введённых значений';
+        al.innerText = '';
+        surrender.innerText = 'Назад';
+        turn = true;
+        player1.steps = 0;
+        player1.value = '',
+            player1.a = [],
+            player2.steps = 0;
+        player2.value = '',
+            player2.a = [],
+            attempNmb.innerText = ''
+        attempNmb2.innerText = ''
     }
-    //ПРОВЕРКА ЧИСЛА
-    d.form.addEventListener('submit', e => {
+    const p = $('#form p')
+
+    //ПРОВЕРКА ЧИСЛА ВО ВРЕМЯ ОТПРАВКИ ФОРМЫ
+    form.addEventListener('submit', e => {
         e.preventDefault()
-        if (!togglePlay) {
-            examination(+d.input.value)
-        } else if (togglePlay) {
-            conditionMulti()
-            switch (counter) {
-                case 1:
-                    examination(player1.value)
-                    break
-                case 2:
-                    examination(player2.value)
-                    break
+        let value = +input.value
+        if (value === '' || value === null || value === undefined) return
+
+        if (onePlayer) {
+            examination(+input.value)
+            a = [...a, +input.value];
+            if (a.length === 1) {
+                attemp.innerText = 'значение:'
+            } else if (a.length > 1) {
+                attemp.innerText = 'значения:'
+            }
+            attempNmb.innerText = a;
+        } else if (!onePlayer) {
+            attemp.innerText = ''
+            addValuePlayers()
+            if (turn) {
+                p.innerHTML = 'Ход <b>1</b> игрока'
+            }
+            else {
+                p.innerHTML = 'Ход <b>2</b> игрок'
             }
         }
+        count++
+        surrender.innerText = 'сдаться'
+
     })
 
     //Функция проверки числа
-    function examination(el) {
-        //Проверка на нежелаемый тип данных
-        switch (el) {
-            case null:
-            case ' ':
-            case undefined:
+    function examination(value) {
+        if (rand > value) {
+            al.innerHTML = `Число, которое я загадал, <b>больше ${input.value}</b> `
+        } else if (rand < value) {
+            al.innerHTML = `Число, которое я загадал, <b>меньше ${input.value}</b>`
+        } else if (rand === value) {
+            if (value === player1.value) {
+                showWin(game, win, rand, player1.steps, player1.value, turn)
                 return
+            } else if (value === player2.value) {
+                showWin(game, win, rand, player2.steps, player2.value, turn)
+                return
+            } else
+                count++
+            showWin(game, win, rand, count)
+            attemp
         }
-        if (rand > el) {
-            d.al.innerText = 'Число, которое я загадал, больше твоего'
-        } else if (rand < el) {
-            d.al.innerText = 'Число, которое я загадал, меньше твоего'
-        } else if (rand === el) {
-            showWin(d.game, d.win, rand, count)
-        }
-        count++
+
     }
 
-    function conditionMulti() {
-        let input = +d.input.value
-        switch (counter) {
-            case 1: {
-                counter++
-                player1.steps++
-                player1.value = input
-                player1.a = [...player1.a, input]
-                break;
-            }
-            case 2: {
-                player2.steps++
-                player2.value = input
-                player2.a = [...player1.a, input]
-                counter = 1
-                break
-            }
+    function addValuePlayers() {
+        let value = +input.value
+        if (turn) {
+            player1.steps++
+            player1.value = value
+            player1.a = [...player1.a, value]
+            attempNmb.innerText = `Значения первого игрока:
+            ${player1.a}`
+            examination(+player1.value)
+            turn = false;
+            // console.log('1 игрок')
+            // console.log(player1.a)
+            // console.log(+player1.value)
+        } else if (!turn) {
+            player2.steps++
+            player2.value = value
+            player2.a = [...player2.a, value]
+            attempNmb2.innerText = `Значения второго игрока: 
+            ${player2.a}`;
+            examination(player2.value)
+            turn = true
+            // console.log('2 игрок')
+            // console.log(player2.a)
+            // console.log(player2.value)
         }
+
     }
-
-
 
 
 
@@ -117,19 +146,21 @@ function main() {
 
 
     //Инкремент значения в поле
-    d.inc.addEventListener('click', () => {
-        d.input.value++
+    const { inc, dec, ul, input, difInf, difficult_p, } = d;
+    inc.addEventListener('click', () => {
+        input.value++
     })
-    d.dec.addEventListener('click', () => {
-        d.input.value--
+    dec.addEventListener('click', () => {
+        input.value--
     })
     //==============================================================================================
     //Выбор сложности
-    d.ul.addEventListener('click', e => {
-        if (e.target?.dataset?.difficult) {
-            number = e.target.dataset.difficult
-            d.difInf.forEach(el => el.innerText =
-                `${e.target.innerText} (0 - ${e.target.dataset.difficult})`)
+    ul.addEventListener('click', e => {
+        const df = e.target.dataset.difficult
+        if (df) {
+            number = df
+            difInf.forEach(el => el.innerText =
+                `${e.target.innerText} (0 - ${df})`)
             rand = random(number)
         }
     })
@@ -146,41 +177,50 @@ function main() {
 
         if (el === $id("start")) {
             setTimeout(toggleWindow, 1000, game)
-            togglePlay = false
+            reset()
+            rand = random(number)
+            console.log(rand)
+            onePlayer = true;
+            p.innerText = 'Введите значение'
         }
 
-        if (el === $id("setting")) setTimeout(toggleWindow, 1000, settings)
+        if (el === $id("setting")) {
+            setTimeout(toggleWindow, 1000, settings)
+        }
 
         if (el === $id('multi')) {
-            setTimeout(toggleWindow, 1000, game)
-            togglePlay = true
+            p.innerHTML = 'Ход <b>1</b> игрока'
+            setTimeout(toggleWindow, 0, game)
+            reset()
+            console.log("rand: ", rand)
+            onePlayer = false
         }
     })
     //Открытие и закрытие списка сложности
-    d.difficult_p.addEventListener('click', () => {
-        if (d.difficult_p.classList.contains('active')) {
-            delay(d.difficult_p, 'active', 800)
+    difficult_p.addEventListener('click', () => {
+        if (difficult_p.classList.contains('active')) {
+            delay(difficult_p, 'active', 800)
         } else {
-            add(d.difficult_p, 'active')
+            add(difficult_p, 'active')
         }
-        toggle(d.ul, 'active')
+        toggle(ul, 'active')
     });
     //Задержки для анимации меню настроек
     let setId;
-    d.ul.addEventListener('click', e => {
-        const v = e.target;
-        if (v.dataset.difficult) {
+    ul.addEventListener('click', e => {
+        const i = e.target;
+        if (i.dataset.difficult) {
             //Удаляет класс со всех кнопок
             d.a.forEach(el => remove(el, 'active'))
             //Закрывает список через время
-            delay(d.ul, "active", 1500)
-            delay(d.difficult_p, "active", 2000)
+            delay(ul, "active", 1500)
+            delay(difficult_p, "active", 2000)
             //Через время вызывает интервал
-            setTimeout(setId = setInterval(toggle, 300, v, 'active'), 400)
+            setTimeout(setId = setInterval(toggle, 300, i, 'active'), 400)
             //Удаляет интервал
             setTimeout(() => {
                 clearInterval(setId)
-                add(v, 'active')
+                add(i, 'active')
             }, 2500)
         }
     })
@@ -211,6 +251,6 @@ function main() {
     $("#checkbox div").addEventListener('click', e => {
         toggle(e.target, 'active')
     })
+
 }
-
-
+export { multiVal }
